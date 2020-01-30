@@ -1,0 +1,8 @@
+ldr r0,=0x04
+ldr r1,=0x01
+fact:
+mul r1,r0,r1
+sub r0,r0,#1
+cmp r0,#0
+bne fact
+swi 0x11

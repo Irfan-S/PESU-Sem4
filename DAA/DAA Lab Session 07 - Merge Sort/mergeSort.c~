@@ -1,0 +1,82 @@
+// Merges two sorted halfs of an array into a single sorted array
+void mergeSortedHalfs(int *a, int start, int mid, int end){
+	int len1 = mid-start+1;
+	int len2 = end-mid;
+	int i,j,k;
+	
+	int T1[len1],T2[len2];
+	for(i=0;i<=len1;i++){
+		T1[i]=a[start+i];
+	}
+	for(j=0;j<=len2;j++){
+		T2[j]=a[mid+1+j];	
+	}
+	i=0;
+	j=0;
+	k=start;
+	while(i<=len1 && j<=len2){
+		if(T1[i]<=T2[j]){
+			a[k]=T1[i];
+			i++;
+		}else{
+			a[k]=T2[j];
+			j++;	
+		}
+		k++;
+	}
+	while(i<=len1){
+		a[k]=T1[i];
+		k++;
+		i++;
+	}
+	while(j<=len2){
+		a[k]=T2[j];
+		k++;
+		j++;
+}
+	
+}
+
+// Implement merge sort using the mergeSortedHalfs() declared above
+// start is the index of the first element of the array
+// end is the index of the last element of the array
+void mergeSort(int *a, int start, int end){
+	if(start<end){
+	int mid  = (start+end)/2;
+	mergeSort(a,start,mid);
+	mergeSort(a,mid+1,end);
+	mergeSortedHalfs(a,start,mid,end);
+	}
+}
+
+// Implement insertion sort
+// n - number of elements in the array
+void insertionSort(int *a, int start, int end){
+	int i, key, j; 
+    	for (i = 1; i <=end; i++) { 
+        key = a[i]; 
+        j = i - 1; 
+  
+        /* Move elements of arr[0..i-1], that are 
+          greater than key, to one position ahead 
+          of their current position */
+        while (j >= 0 && a[j] > key) { 
+            a[j + 1] = a[j]; 
+            j = j - 1; 
+        } 
+        a[j + 1] = key; 
+    } 
+}
+
+// Implement a function which applies merge sort only if
+// size of the array is larger than that of parameter
+// if not apply insertion sort.
+// Use mergeSortedHalfs() and insertionSort() declared above to do the same.
+void selectiveMergeSort(int *a, int start, int end, int parameter){
+	int sz= end-start;
+	if(sz>parameter){
+		mergeSort(a,start,end);
+	}else{
+		insertionSort(a,start,end);
+	}
+}
